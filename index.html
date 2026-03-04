@@ -1,1 +1,230 @@
-Index.html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>For Hima 🤍</title>
+
+    <!-- MOBILE RESPONSIVE META -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Georgia', serif;
+            background: #fff8f5;
+            overflow-x: hidden;
+        }
+
+        /* FIRST PAGE */
+        #firstPage {
+            height: 100vh;
+            background: linear-gradient(135deg, #ffdce5, #ffeef3);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: clamp(22px, 5vw, 32px);
+            color: #6a0572;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: clamp(16px, 4vw, 18px);
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            margin: 12px;
+            transition: 0.3s ease;
+        }
+
+        #yesBtn {
+            background-color: #6a0572;
+            color: white;
+        }
+
+        #noBtn {
+            position: absolute;
+            background-color: #ff4d6d;
+            color: white;
+        }
+
+        /* SECOND PAGE */
+        #secondPage {
+            display: none;
+            min-height: 100vh;
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        .media {
+            width: 90%;
+            max-width: 350px;
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(255, 182, 193, 0.6);
+            margin-top: 20px;
+        }
+
+        .message {
+            max-width: 700px;
+            margin: 30px auto;
+            font-size: clamp(16px, 4vw, 20px);
+            line-height: 1.8;
+            color: #5a3e36;
+            white-space: pre-line;
+            min-height: 150px;
+        }
+
+        #magicBtn {
+            margin-top: 20px;
+            background: #ff85a2;
+            color: white;
+        }
+
+        .hiddenMessage {
+            display: none;
+            font-size: clamp(18px, 4vw, 22px);
+            margin-top: 20px;
+            color: #b30059;
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 8px #ff85a2; }
+            to { text-shadow: 0 0 20px #ff1493; }
+        }
+
+        /* PETALS */
+        .petal {
+            position: fixed;
+            top: -10px;
+            font-size: 20px;
+            animation: fall linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div id="firstPage">
+    <h1>Hima 🤍<br>Are you thinking you are alone?</h1>
+    <button id="yesBtn">Yes</button>
+    <button id="noBtn">No</button>
+</div>
+
+<div id="secondPage">
+
+    <img src="withMom.png" id="mainImage" class="media">
+
+    <video id="hugVideo" class="media" style="display:none;" loop muted playsinline>
+        <source src="hug.mp4" type="video/mp4">
+    </video>
+
+    <div class="message" id="typedText"></div>
+
+    <button id="magicBtn">Maa’s Hug 🤍</button>
+
+    <div class="hiddenMessage" id="hiddenMessage">
+        🌸 Hima, Maa is always with you. You are never alone. 🌸
+    </div>
+
+</div>
+
+<script>
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const firstPage = document.getElementById("firstPage");
+    const secondPage = document.getElementById("secondPage");
+    const typedText = document.getElementById("typedText");
+    const magicBtn = document.getElementById("magicBtn");
+    const hiddenMessage = document.getElementById("hiddenMessage");
+
+    // NO BUTTON MOVES (Mobile + Desktop)
+    function moveNoButton() {
+        const x = Math.random() * (window.innerWidth - 100);
+        const y = Math.random() * (window.innerHeight - 60);
+        noBtn.style.left = x + "px";
+        noBtn.style.top = y + "px";
+    }
+
+    noBtn.addEventListener("mouseover", moveNoButton);
+    noBtn.addEventListener("touchstart", moveNoButton);
+
+    // YES CLICK
+    yesBtn.addEventListener("click", function () {
+        firstPage.style.display = "none";
+        secondPage.style.display = "block";
+        typeWriter();
+        createPetals();
+    });
+
+    // TYPEWRITER MESSAGE
+    const message = `My dearest Hima 🤍
+
+Even if you cannot see me,
+I am always around you.
+
+હિમા, તું ક્યારેય એકલી નથી.
+મારો આશીર્વાદ હંમેશા તારા સાથે છે.
+
+Follow your heart.
+Trust your strength.
+Everything will fall into place Beta.
+
+તું હિંમતવાળી છે.
+તું મારી ગર્વ છે.
+
+I am with you in every color, in every tear, in every smile. 🌸
+Miss You Too Beta`;
+
+    let i = 0;
+
+    function typeWriter() {
+        if (i < message.length) {
+            typedText.innerHTML += message.charAt(i);
+            i++;
+            setTimeout(typeWriter, 30);
+        }
+    }
+
+    // HUG BUTTON
+    magicBtn.addEventListener("click", function () {
+        hiddenMessage.style.display = "block";
+
+        const img = document.getElementById("mainImage");
+        const video = document.getElementById("hugVideo");
+
+        img.style.display = "none";
+        video.style.display = "block";
+        video.play();
+    });
+
+    // PETALS (Optimized for mobile)
+    function createPetals() {
+        setInterval(() => {
+            const petal = document.createElement("div");
+            petal.classList.add("petal");
+            petal.innerHTML = "🌸";
+            petal.style.left = Math.random() * 100 + "vw";
+            petal.style.animationDuration = (Math.random() * 4 + 6) + "s";
+            document.body.appendChild(petal);
+
+            setTimeout(() => petal.remove(), 9000);
+        }, 700);
+    }
+</script>
+
+</body>
+  </html>
